@@ -1,4 +1,4 @@
-// vim: set sw=4 noet ts=4:
+// vim: set sw=4 noet ts=4 autoindent copyindent:
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -60,11 +60,20 @@ var AboutAccessibilityEnabledService = {
 	// nsIAboutModule implementation
 
 	newChannel: function(aURI) {
-		var s = "<p>Firefox currently " +
-		        (this.isAccessibilityEnabled()
-		            ?  "<strong>does</strong>"
-		            : "does <strong>not</strong>") +
-		        " have accessibility API support active.</p>";
+		var x =
+			<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+				<head>
+					<title>about:accessibilityenabled</title>
+				</head>
+				<body>
+					<p>Firefox currently {
+						this.isAccessibilityEnabled()
+							? <><strong>does</strong></>
+							: <>does <strong>not</strong></>
+					} have accessibility API support active.</p>
+				</body>
+			</html>
+		var s = x.toString();
 
 		var is = CC[NS_STRINGINPUTSTREAM_CONTRACTID]
 		    .createInstance(CI.nsIStringInputStream);
@@ -76,8 +85,8 @@ var AboutAccessibilityEnabledService = {
 		channel.setURI(aURI);
 		channel.contentStream = is;
 		channel = channel.QueryInterface(CI.nsIChannel);
-		channel.contentType = "text/html";
-		channel.contentCharset = "us-ascii";
+		channel.contentType = "application/xhtml+xml";
+		channel.contentCharset = "UTF-8";
 		return channel;
 	},
 
