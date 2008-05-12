@@ -41,7 +41,7 @@
 
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>{7a40e08d-6eb6-430c-8104-422341c54cb2}</em:id>
-		<em:version>1.2</em:version>
+		<em:version>1.3</em:version>
 		
 		<!-- Firefox -->
 		<em:targetApplication>
@@ -57,6 +57,6 @@
 		<em:name>about:accessibilityenabled</em:name>
 		<em:description>An about page, about:accessibilityenabled, to show whether accessibility API support is active</em:description>
 		<em:creator>L. David Baron</em:creator>
-		<em:homepageURL>http://dbaron.org/</em:homepageURL>
+		<em:homepageURL>http://dbaron.org/mozilla/about-accessibilityenabled/</em:homepageURL>
 	</Description>
 </RDF>
