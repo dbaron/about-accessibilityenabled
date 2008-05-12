@@ -90,6 +90,10 @@ var AboutAccessibilityEnabledService = {
 		return channel;
 	},
 
+	getURIFlags: function(aURI) {
+	        return CI.nsIAboutModule.URI_SAFE_FOR_UNTRUSTED_CONTENT;
+	},
+
 	// private methods
 
 	isAccessibilityEnabled: function() {
