@@ -104,7 +104,7 @@ var AboutAccessibilityEnabledService = {
 			enabled = Components.manager.QueryInterface(CI.nsIServiceManager)
 				.isServiceInstantiatedByContractID(
 					"@mozilla.org/accessibilityService;1",
-					CI.nsIAccessibilityService);
+					CI.nsISupports);
 		} catch (ex) {
 			enabled = false;
 		}
