@@ -35,7 +35,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-VERSION		= 1.3
+VERSION		= 1.4
 NAME		= about-accessibilityenabled
 XPI_FILE	= ../$(NAME)-$(VERSION).xpi
 
