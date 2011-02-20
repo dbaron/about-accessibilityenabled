@@ -1,0 +1,2 @@
+component {003080df-a8aa-421d-9180-00479e96bfdb} components/AboutAccessibilityEnabled.js
+contract @mozilla.org/network/protocol/about;1?what=accessibilityenabled {003080df-a8aa-421d-9180-00479e96bfdb}

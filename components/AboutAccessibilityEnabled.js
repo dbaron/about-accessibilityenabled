@@ -39,16 +39,22 @@ const CI = Components.interfaces;
 const CC = Components.classes;
 const CR = Components.results;
 
-const ABOUT_ACCESSIBILITYENABLED_CONTRACTID =
-	"@mozilla.org/network/protocol/about;1?what=accessibilityenabled";
-const ABOUT_ACCESSIBILITYENABLED_CID =
-	Components.ID("{003080df-a8aa-421d-9180-00479e96bfdb}");
+Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
+
 const NS_STRINGINPUTSTREAM_CONTRACTID =
 	"@mozilla.org/io/string-input-stream;1";
 const NS_INPUTSTREAMCHANNEL_CONTRACTID =
 	"@mozilla.org/network/input-stream-channel;1";
 
-var AboutAccessibilityEnabledService = {
+function AboutAccessibilityEnabledService() {
+}
+
+AboutAccessibilityEnabledService.prototype = {
+	// Data for module / factory.
+	classDescription: "about:accessibilityenabled service",
+	classID: Components.ID("{003080df-a8aa-421d-9180-00479e96bfdb}"),
+	contractID: "@mozilla.org/network/protocol/about;1?what=accessibilityenabled",
+
 	// nsISupports implementation
 
 	QueryInterface: function(uuid) {
@@ -112,70 +118,9 @@ var AboutAccessibilityEnabledService = {
 	}
 };
 
-function ServiceFactory(aObject) {
-	this._mObject = aObject;
-}
+var components = [ AboutAccessibilityEnabledService ];
 
-ServiceFactory.prototype = {
-	// nsISupports implementation
-
-	QueryInterface: function(uuid) {
-		if (uuid.equals(CI.nsISupports) || uuid.equals(CI.nsIFactory))
-			return this;
-		throw CR.NS_NOINTERFACE;
-	},
-
-	// nsIFactory implementation
-
-	createInstance: function(aOuter, iid) {
-		if (aOuter)
-			throw CR.NS_ERROR_NO_AGGREGATION;
-		return this._mObject.QueryInterface(iid);
-	},
-
-	lockFactory: function(lock) {
-	},
-
-	// private data
-	_mObject: null
-};
-
-var AboutAccessibilityEnabledModule = {
-	// nsISupports implementation
-
-	QueryInterface: function(uuid) {
-		if (uuid.equals(CI.nsISupports) || uuid.equals(CI.nsIModule))
-			return this;
-		throw CR.NS_NOINTERFACE;
-	},
-
-	// nsIModule implementation
-
-	getClassObject: function(aCompMgr, aClass, aIID) {
-		if (aClass.equals(ABOUT_ACCESSIBILITYENABLED_CID))
-			return new ServiceFactory(AboutAccessibilityEnabledService);
-		throw CR.NS_ERROR_FACTORY_NOT_REGISTERED;
-	},
-
-	registerSelf: function(aCompMgr, aLocation, aLoaderStr, aType) {
-		var compReg = aCompMgr.QueryInterface(CI.nsIComponentRegistrar);
-		compReg.registerFactoryLocation(ABOUT_ACCESSIBILITYENABLED_CID,
-		                                "aboutaccessibilityenabled module",
-		                                ABOUT_ACCESSIBILITYENABLED_CONTRACTID,
-		                                aLocation, aLoaderStr, aType);
-	},
-
-	unregisterSelf: function(aCompMgr, aLocation, aLoaderStr) {
-		var compReg = aCompMgr.QueryInterface(CI.nsIComponentRegistrar);
-		compReg.unregisterFactoryLocation(ABOUT_ACCESSIBILITYENABLED_CID,
-		                                  aLocation);
-	},
-
-	canUnload: function(aCompMgr) {
-		return true;
-	}
-};
-
-function NSGetModule(compMgr, fileSpec) {
-	return AboutAccessibilityEnabledModule;
-}
+if (XPCOMUtils.generateNSGetFactory)
+	var NSGetFactory = XPCOMUtils.generateNSGetFactory(components);
+else
+	var NSGetModule = XPCOMUtils.generateNSGetModule(components);

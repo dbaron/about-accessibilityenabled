@@ -41,6 +41,7 @@ XPI_FILE	= ../$(NAME)-$(VERSION).xpi
 
 XPI_SOURCES = \
 	./install.rdf \
+	./chrome.manifest \
 	./components/AboutAccessibilityEnabled.js \
 	$(NULL)
 
